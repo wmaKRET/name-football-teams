@@ -2,13 +2,15 @@ import React, { useEffect, useState, useRef } from "react"
 import Team from "./Team"
 
 function Game(props) {
-    const TIMER_VALUE = 100
+    const TIMER_VALUE = 5
+    const HOW_MANY_TEAMS = 20
 
     const [teamsArray, setTeamsArray] = useState([])
     const [inputText, setInputText] = useState('')
     const [timeRemaining, setTimeRemaining] = useState(TIMER_VALUE)
     const [isTimeRunning, setIsTimeRunning] = useState(false)
     const [teamsGuessed, setTeamsGuessed] = useState(0)
+    const [isGameOver, setIsGameOver] = useState(false)
     const inputRef = useRef(null)
 
     const getData = () => {
@@ -25,6 +27,7 @@ function Game(props) {
 
     function startGame(){
         getData()
+        setIsGameOver(false)
         setTimeRemaining(TIMER_VALUE)
         setIsTimeRunning(true)
         setInputText('')
@@ -34,6 +37,7 @@ function Game(props) {
 
     function endGame(){
         setIsTimeRunning(false)
+        setIsGameOver(true)
     }
 
     useEffect(() => {
@@ -60,7 +64,7 @@ function Game(props) {
 
     useEffect(() => {
         const howManyTeamsGuessed = teamsArray.filter(team => team.isGuessed).length
-        if (howManyTeamsGuessed === teamsArray.length) endGame()
+        if (howManyTeamsGuessed === HOW_MANY_TEAMS) endGame()
         setTeamsGuessed(howManyTeamsGuessed)
     }, [teamsArray])
 
@@ -77,14 +81,14 @@ function Game(props) {
         <main className="game">
             <div className="game__hud">
                 <p>Time Remaining: {timeRemaining}</p>
-                <p>{teamsGuessed}/{teamsArray.length} Guessed</p>
+                <p>{teamsGuessed}/{HOW_MANY_TEAMS} Guessed</p>
             </div>
             <div className="game__panel">
                 <button
                     className="game__panel-btn"
                     onClick={startGame}
                     disabled={isTimeRunning}
-                >START
+                >{isGameOver ? 'RESTART' : 'START'}
                 </button>
                 <input
                     ref={inputRef}

@@ -178,10 +178,10 @@ body {
 }
 
 .game__team-list-item .showTeamName {
-  color: white;
+  visibility: visible;
 }
 
 .game__team-list-item .hideTeamName {
-  color: gray;
+  visibility: hidden;
 }
 /*# sourceMappingURL=main.css.map */
