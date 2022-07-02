@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import Team from "./Team"
 
 function Game(props) {
-    const TIMER_VALUE = 5
+    const TIMER_VALUE = 100
 
     const [teamsArray, setTeamsArray] = useState([])
     const [inputText, setInputText] = useState('')
     const [timeRemaining, setTimeRemaining] = useState(TIMER_VALUE)
     const [isTimeRunning, setIsTimeRunning] = useState(false)
+    const [teamsGuessed, setTeamsGuessed] = useState(0)
+    const inputRef = useRef(null)
 
     const getData = () => {
         fetch('../data.json')
@@ -22,9 +24,12 @@ function Game(props) {
     }
 
     function startGame(){
+        getData()
         setTimeRemaining(TIMER_VALUE)
         setIsTimeRunning(true)
         setInputText('')
+        inputRef.current.disabled = false
+        inputRef.current.focus()
     }
 
     function endGame(){
@@ -43,6 +48,22 @@ function Game(props) {
          } else if (timeRemaining === 0) endGame()
     }, [timeRemaining, isTimeRunning])
 
+    useEffect(() => {
+        if (teamsArray.some(team => team.name === inputText)) {
+            setTeamsArray(prevTeamsArray => prevTeamsArray
+                .map(team => team.name === inputText 
+                        ? {...team, isGuessed: true}
+                        : team))
+            setInputText('')            
+        }
+    }, [inputText])
+
+    useEffect(() => {
+        const howManyTeamsGuessed = teamsArray.filter(team => team.isGuessed).length
+        if (howManyTeamsGuessed === teamsArray.length) endGame()
+        setTeamsGuessed(howManyTeamsGuessed)
+    }, [teamsArray])
+
     const teamElements = teamsArray.map(team => (
         <Team 
             key={team.id_team}
@@ -56,7 +77,7 @@ function Game(props) {
         <main className="game">
             <div className="game__hud">
                 <p>Time Remaining: {timeRemaining}</p>
-                <p>0/20 Guessed</p>
+                <p>{teamsGuessed}/{teamsArray.length} Guessed</p>
             </div>
             <div className="game__panel">
                 <button
@@ -66,6 +87,7 @@ function Game(props) {
                 >START
                 </button>
                 <input
+                    ref={inputRef}
                     value={inputText}
                     className="game__panel-input"
                     placeholder="Type here..."
