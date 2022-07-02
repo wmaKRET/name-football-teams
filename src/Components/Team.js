@@ -1,9 +1,9 @@
 import React from "react"
 
-function Team(){
+function Team(props){
     return (
-        <div>
-            <p>Arsenal</p>
+        <div className="list__team">
+            <p className="list__team-title">{props.name}</p>
         </div>
     )
 }
