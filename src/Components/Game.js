@@ -19,7 +19,6 @@ function Game(props) {
     function handleChange(event){
         const {value} = event.target
         setInputText(value)
-        console.log(inputText)
     }
 
     function startGame(){
