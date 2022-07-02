@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react"
 import Team from "./Team"
 
 function Game(props) {
-    const TIMER_VALUE = 5
+    const TIMER_VALUE = 100
     const HOW_MANY_TEAMS = 20
 
     const [teamsArray, setTeamsArray] = useState([])
