@@ -2,8 +2,11 @@ import React from "react"
 
 function Team(props){
     return (
-        <div className="list__team">
-            <p className="list__team-title">{props.name}</p>
+        <div className="game__team-list-item">
+            <p>{props.nr}.&nbsp;</p>
+            <p className={props.isGuessed ? "showTeamName" : "hideTeamName"}>
+                {props.name}
+            </p>
         </div>
     )
 }

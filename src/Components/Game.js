@@ -18,6 +18,7 @@ function Game(props) {
     const teamElements = teamsArray.map(team => (
         <Team 
             key={team.id_team}
+            nr={team.id_team}
             name={team.name}
             isGuessed={team.isGuessed}
         />
@@ -25,9 +26,16 @@ function Game(props) {
 
     return (
         <main className="game">
-            <input
-                placeholder="Type here..."
-            />
+            <div className="game__panel">
+                <button
+                    className="game__panel-btn"
+                >START
+                </button>
+                <input
+                    className="game__panel-input"
+                    placeholder="Type here..."
+                />
+            </div>
             <div className="game__team-list">
                 {teamElements}
             </div>

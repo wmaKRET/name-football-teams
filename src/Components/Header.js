@@ -1,9 +1,14 @@
 import React from "react"
 
-function Header(){
+function Header(props){
     return (
-        <header>
-            <h2>Premier League</h2>
+        <header className="header">
+            <div className="header__team">
+                <p className="header__team-title">Premier League</p>
+            </div>
+            <div className="header__team disabled">
+                <p className="header__team-title">La Liga</p>
+            </div>
         </header>
     )
 }
