@@ -130,6 +130,11 @@ body {
             .hideTeamName {
                 visibility: hidden;
             }
+
+            .showTeamNameGameOver {
+                color: red;
+                visibility: visible;
+            }
         }
     }
 }

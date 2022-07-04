@@ -74,6 +74,7 @@ function Game(props) {
             nr={team.id_team}
             name={team.name}
             isGuessed={team.isGuessed}
+            isGameOver={isGameOver}
         />
     ))
 

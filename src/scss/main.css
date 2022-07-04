@@ -184,4 +184,9 @@ body {
 .game__team-list-item .hideTeamName {
   visibility: hidden;
 }
+
+.game__team-list-item .showTeamNameGameOver {
+  color: red;
+  visibility: visible;
+}
 /*# sourceMappingURL=main.css.map */
