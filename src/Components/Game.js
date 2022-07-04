@@ -20,6 +20,7 @@ function Game(props) {
             .catch(error => console.log(`Error: ${error}`))
     }
 
+    // updates state(inputText) on every key stroke
     function handleChange(event){
         const {value} = event.target
         setInputText(value)
@@ -31,6 +32,7 @@ function Game(props) {
         setTimeRemaining(TIMER_VALUE)
         setIsTimeRunning(true)
         setInputText('')
+        // makes input field active and focused
         inputRef.current.disabled = false
         inputRef.current.focus()
     }
@@ -40,10 +42,12 @@ function Game(props) {
         setIsGameOver(true)
     }
 
+    // loads teams(setTeamsArray)
     useEffect(() => {
         getData()
     }, [])
 
+    // decrements timer value, ends game when there's no time left
     useEffect(() => {
          if (isTimeRunning && timeRemaining > 0){
             setTimeout(() => {
@@ -52,16 +56,18 @@ function Game(props) {
          } else if (timeRemaining === 0) endGame()
     }, [timeRemaining, isTimeRunning])
 
+    // clears input field(value) if team name is guessed
     useEffect(() => {
-        if (teamsArray.some(team => team.name === inputText)) {
+        if (teamsArray.some(team => team.name.toLowerCase() === inputText.toLowerCase())) {
             setTeamsArray(prevTeamsArray => prevTeamsArray
-                .map(team => team.name === inputText 
+                .map(team => team.name.toLowerCase() === inputText.toLowerCase()
                         ? {...team, isGuessed: true}
                         : team))
             setInputText('')            
         }
     }, [inputText])
 
+    // updates state(teamsGuessed) after isGuessed value changes
     useEffect(() => {
         const howManyTeamsGuessed = teamsArray.filter(team => team.isGuessed).length
         if (howManyTeamsGuessed === HOW_MANY_TEAMS) endGame()
