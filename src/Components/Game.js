@@ -14,7 +14,7 @@ function Game(props) {
     const inputRef = useRef(null)
 
     const getData = () => {
-        fetch('../data.json')
+        fetch('http://wmakret.github.io/name-football-teams/public/users.json')
             .then(response => response.json())
             .then(data => setTeamsArray(data[props.league].teams))
             .catch(error => console.log(`Error: ${error}`))
